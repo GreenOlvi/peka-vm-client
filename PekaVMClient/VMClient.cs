@@ -49,4 +49,10 @@ public sealed class VMClient : IAsyncDisposable
         var response = await DoQueryAsync<IEnumerable<LineEntry>>("getLines", new { pattern });
         return response.IsSuccess ? response.Success!.Select(l => l.Name).ToArray() : Enumerable.Empty<string>();
     }
+
+    public async Task<IEnumerable<BusTime>> GetTimesAsync(string tag)
+    {
+        var response = await DoQueryAsync<GetTimesResponse>("getTimes", new { symbol = tag });
+        return response.IsSuccess ? response.Success.Times : Enumerable.Empty<BusTime>();
+    }
 }

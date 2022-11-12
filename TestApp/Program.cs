@@ -8,7 +8,8 @@ internal class Program
     static async Task Main(string[] args)
     {
         await using var client = new VMClient();
-        await RunGetStopPoints(client, "Bał");
+        //await RunGetStopPoints(client, "Bał");
+        await RunGetBollardsByStopPoint(client, "Bałtyk");
         //await RunGetLines(client, "14");
         //await RunGetTimes(client, "RKAP71");
     }
@@ -22,6 +23,17 @@ internal class Program
         }
     }
 
+    private static async Task RunGetBollardsByStopPoint(VMClient client, string name)
+    {
+        var results = await client.GetBollardsByStopPoint(name);
+        foreach (var result in results) {
+            Console.WriteLine($"[{result.Bollard.Tag}] ({result.Bollard.Symbol}) {result.Bollard.Name}");
+            foreach (var direction in result.Directions)
+            {
+                Console.WriteLine($" - {direction.LineName} {direction.Direction}" + (direction.IsReturnVariant ? " (return)" : string.Empty));
+            }
+        }
+    }
 
     private static async Task RunGetLines(VMClient client, string pattern)
     {

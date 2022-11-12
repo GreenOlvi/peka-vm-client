@@ -2,7 +2,7 @@
 
 namespace PekaVMClient.Responses;
 
-public class BusTime
+public record struct BusTime
 {
     [JsonPropertyName("realTime")]
     public bool IsRealTime { get; init; }
@@ -12,7 +12,7 @@ public class BusTime
 
     public int Minutes { get; init; }
 
-    public string Direction { get; init; } = string.Empty;
+    public string Direction { get; init; }
 
     [JsonPropertyName("lowFloorBus")]
     public bool IsLowFloorBus { get; init; }
@@ -22,7 +22,7 @@ public class BusTime
 
     public DateTime Departure { get; init; }
 
-    public string Line { get; init; } = string.Empty;
+    public string Line { get; init; }
 
     [JsonPropertyName("lowEntranceBus")]
     public bool IsLowEntranceBus { get; init; }

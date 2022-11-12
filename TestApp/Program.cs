@@ -8,8 +8,20 @@ internal class Program
     static async Task Main(string[] args)
     {
         await using var client = new VMClient();
-        await RunGetTimes(client, "RKAP71");
+        await RunGetStopPoints(client, "Bał");
+        //await RunGetLines(client, "14");
+        //await RunGetTimes(client, "RKAP71");
     }
+
+    private static async Task RunGetStopPoints(VMClient client, string pattern)
+    {
+        var points = await client.GetStopPoints(pattern);
+        foreach (var point in points)
+        {
+            Console.WriteLine($"[{point.Symbol}] {point.Name}");
+        }
+    }
+
 
     private static async Task RunGetLines(VMClient client, string pattern)
     {

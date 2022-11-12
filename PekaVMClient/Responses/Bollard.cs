@@ -2,13 +2,13 @@
 
 namespace PekaVMClient.Responses;
 
-public class Bollard
+public record struct Bollard
 {
-    public string Symbol { get; init; } = string.Empty;
+    public string Symbol { get; init; }
 
-    public string Tag { get; init; } = string.Empty;
+    public string Tag { get; init; }
 
-    public string Name { get; init; } = string.Empty;
+    public string Name { get; init; }
 
     [JsonPropertyName("mainBollard")]
     public bool IsMain { get; init; }

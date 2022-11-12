@@ -44,15 +44,27 @@ public sealed class VMClient : IAsyncDisposable
         return JsonSerializer.Deserialize<ApiResponse<T>>(responseJson, _serializerOptions);
     }
 
+    public async Task<IEnumerable<StopPoint>> GetStopPoints(string pattern)
+    {
+        var response = await DoQueryAsync<IEnumerable<StopPoint>>("getStopPoints", new { pattern });
+        return response.IsSuccess
+            ? response.Success!
+            : Enumerable.Empty<StopPoint>();
+    }
+
     public async Task<IEnumerable<string>> GetLinesAsync(string pattern)
     {
         var response = await DoQueryAsync<IEnumerable<LineEntry>>("getLines", new { pattern });
-        return response.IsSuccess ? response.Success!.Select(l => l.Name).ToArray() : Enumerable.Empty<string>();
+        return response.IsSuccess
+            ? response.Success!.Select(l => l.Name).ToArray()
+            : Enumerable.Empty<string>();
     }
 
     public async Task<IEnumerable<BusTime>> GetTimesAsync(string tag)
     {
         var response = await DoQueryAsync<GetTimesResponse>("getTimes", new { symbol = tag });
-        return response.IsSuccess ? response.Success.Times : Enumerable.Empty<BusTime>();
+        return response.IsSuccess
+            ? response.Success!.Times
+            : Enumerable.Empty<BusTime>();
     }
 }

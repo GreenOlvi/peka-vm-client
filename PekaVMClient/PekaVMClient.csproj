@@ -1,12 +1,31 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <PackageId>PekaVMClient</PackageId>
+        <Authors>Piotr Szulc</Authors>
+        <Owner>Piotr Szulc</Owner>
+        <PackageProjectUrl>https://github.com/GreenOlvi/peka-vm-client</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/GreenOlvi/peka-vm-client</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <Summary>C# client for Peka VM web application for fetching live times of busses in Poznań.</Summary>
+        <Description>C# client for Peka VM web application for fetching live times of trams and busses in Poznań (https://www.peka.poznan.pl/vm/).</Description>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <Copyright>Copyright (c) Piotr Szulc 2022</Copyright>
+    </PropertyGroup>
+
+    <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <VersionPrefix>0.0.1</VersionPrefix>
-        <VersionSuffix></VersionSuffix>
         <LangVersion>latest</LangVersion>
+        <BuildNumber>0</BuildNumber>
+        <VersionPrefix>0.0.1.$(BuildNumber)</VersionPrefix>
+        <VersionSuffix Condition="$(Configuration)=='Debug'">debug</VersionSuffix>
+        <DebugType Condition="$(Configuration)=='Debug'">embedded</DebugType>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="../LICENSE" Pack="true" PackagePath="" />
+    </ItemGroup>
 
 </Project>

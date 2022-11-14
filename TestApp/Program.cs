@@ -1,17 +1,19 @@
 ﻿using PekaVMClient;
+using PekaVMClient.Responses;
 using System.Text;
 
 namespace TestApp;
 
-internal class Program
+internal static class Program
 {
     static async Task Main(string[] args)
     {
         await using var client = new VMClient();
         //await RunGetStopPoints(client, "Bał");
-        await RunGetBollardsByStopPoint(client, "Bałtyk");
+        //await RunGetBollardsByStopPoint(client, "Bałtyk");
+        //await RunGetBollardsByStreet(client, "Lutycka");
         //await RunGetLines(client, "14");
-        //await RunGetTimes(client, "RKAP71");
+        await RunGetTimes(client, "RKAP71");
     }
 
     private static async Task RunGetStopPoints(VMClient client, string pattern)
@@ -26,12 +28,24 @@ internal class Program
     private static async Task RunGetBollardsByStopPoint(VMClient client, string name)
     {
         var results = await client.GetBollardsByStopPoint(name);
+        PrintBollardsAndDirections(results);
+    }
+
+    private static async Task RunGetBollardsByStreet(VMClient client, string name)
+    {
+        var results = await client.GetBollardsByStopPoint(name);
+        PrintBollardsAndDirections(results);
+    }
+
+    private static void PrintBollardsAndDirections(IEnumerable<BollardAndDirections> results)
+    {
         foreach (var result in results) {
             Console.WriteLine($"[{result.Bollard.Tag}] ({result.Bollard.Symbol}) {result.Bollard.Name}");
             foreach (var direction in result.Directions)
             {
                 Console.WriteLine($" - {direction.LineName} {direction.Direction}" + (direction.IsReturnVariant ? " (return)" : string.Empty));
             }
+            Console.WriteLine();
         }
     }
 

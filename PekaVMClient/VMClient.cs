@@ -44,21 +44,29 @@ public sealed class VMClient : IAsyncDisposable
         return JsonSerializer.Deserialize<ApiResponse<T>>(responseJson, _serializerOptions);
     }
 
-    private static IEnumerable<T> Unpack<T>(ApiResponse<IEnumerable<T>> response) =>
+    private static IEnumerable<T> UnpackResponse<T>(ApiResponse<IEnumerable<T>> response) =>
         response.IsSuccess ? response.Success! : Enumerable.Empty<T>();
 
     public async Task<IEnumerable<StopPoint>> GetStopPoints(string pattern) =>
-        Unpack(await DoQueryAsync<IEnumerable<StopPoint>>("getStopPoints", new { pattern }));
+        UnpackResponse(await DoQueryAsync<IEnumerable<StopPoint>>("getStopPoints", new { pattern }));
 
     public async Task<IEnumerable<BollardAndDirections>> GetBollardsByStopPoint(string name) {
         var response = await DoQueryAsync<BollardsAndDirectionsResponse>("getBollardsByStopPoint", new { name });
-        return response.IsSuccess
-            ? response.Success!.Bollards
+        return response.IsSuccess && response.Success.Bollards is not null
+            ? response.Success.Bollards
+            : Enumerable.Empty<BollardAndDirections>();
+    }
+
+    public async Task<IEnumerable<BollardAndDirections>> GetBollardsByStreet(string name)
+    {
+        var response = await DoQueryAsync<BollardsAndDirectionsResponse>("getBollardsByStreet", new { name });
+        return response.IsSuccess && response.Success.Bollards is not null
+            ? response.Success.Bollards
             : Enumerable.Empty<BollardAndDirections>();
     }
 
     public async Task<IEnumerable<string>> GetLinesAsync(string pattern) =>
-        Unpack(await DoQueryAsync<IEnumerable<LineEntry>>("getLines", new { pattern })).Select(l => l.Name);
+        UnpackResponse(await DoQueryAsync<IEnumerable<LineEntry>>("getLines", new { pattern })).Select(l => l.Name);
 
     public async Task<IEnumerable<BusTime>> GetTimesAsync(string tag)
     {

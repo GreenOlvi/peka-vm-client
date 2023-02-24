@@ -10,7 +10,7 @@
         <Summary>C# client for Peka VM web application for fetching live times of busses in Poznań.</Summary>
         <Description>C# client for Peka VM web application for fetching live times of trams and busses in Poznań (https://www.peka.poznan.pl/vm/).</Description>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <Copyright>Copyright (c) Piotr Szulc 2022</Copyright>
+        <Copyright>Copyright (c) Piotr Szulc 2023</Copyright>
     </PropertyGroup>
 
     <PropertyGroup>
@@ -19,7 +19,7 @@
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <BuildNumber>0</BuildNumber>
-        <VersionPrefix>0.0.1.$(BuildNumber)</VersionPrefix>
+        <VersionPrefix>0.1.0.$(BuildNumber)</VersionPrefix>
         <VersionSuffix Condition="$(Configuration)=='Debug'">debug</VersionSuffix>
         <DebugType Condition="$(Configuration)=='Debug'">embedded</DebugType>
     </PropertyGroup>

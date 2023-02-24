@@ -5,7 +5,7 @@ namespace PekaVMClient;
 
 public sealed class VMClient : IAsyncDisposable, IDisposable
 {
-    private static readonly Uri BaseUrl = new("https://www.peka.poznan.pl/vm/method.vm");
+    public static readonly Uri BaseUrl = new("https://www.peka.poznan.pl/vm/method.vm");
 
     private readonly bool _disposeClient = true;
     private readonly HttpClient _httpClient = new()

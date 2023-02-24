@@ -2,7 +2,7 @@
 
 namespace PekaVMClient.Responses;
 
-public record struct LineDirection
+public readonly record struct LineDirection
 {
     [JsonPropertyName("returnVariant")]
     public bool IsReturnVariant { get; init; }

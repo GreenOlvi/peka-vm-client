@@ -2,7 +2,7 @@
 
 namespace PekaVMClient.Responses;
 
-public record struct LineEntry
+public readonly record struct LineEntry
 {
     [JsonPropertyName("name")]
     public string Name { get; init; }

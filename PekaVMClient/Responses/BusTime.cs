@@ -2,7 +2,7 @@
 
 namespace PekaVMClient.Responses;
 
-public record struct BusTime
+public readonly record struct BusTime
 {
     [JsonPropertyName("realTime")]
     public bool IsRealTime { get; init; }

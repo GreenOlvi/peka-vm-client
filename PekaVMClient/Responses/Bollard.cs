@@ -2,7 +2,7 @@
 
 namespace PekaVMClient.Responses;
 
-public record struct Bollard
+public readonly record struct Bollard
 {
     public string Symbol { get; init; }
 
